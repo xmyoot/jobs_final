@@ -18,11 +18,11 @@ const jobsBoardSlice = createSlice({
             state.status = 'loading'
         })
         builder.addCase(getJobs.fulfilled, (state, action) => {
-            state.state = 'success'
+            state.status = 'success'
             state.jobs = action.payload
         })
         builder.addCase(getJobs.rejected, (state, action) => {
-            state.state = 'failure'
+            state.status = 'failure'
         })
     }
 })
