@@ -9,6 +9,15 @@ export const getJobs = createAsyncThunk(
     }
 )
 
+export const postJob = createAsyncThunk(
+    'jobs/postJob',
+    async (newJob) => {
+        const { data } = await api.createJob(newJob)
+        console.log(data)
+        return data
+    }
+)
+
 const jobsBoardSlice = createSlice({
     name: 'jobs',
     initialState: { jobs : [], status: null },
@@ -22,6 +31,16 @@ const jobsBoardSlice = createSlice({
             state.jobs = action.payload
         })
         builder.addCase(getJobs.rejected, (state, action) => {
+            state.status = 'failure'
+        })
+        builder.addCase(postJob.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        builder.addCase(postJob.fulfilled, (state, action) => {
+            state.status = 'success'
+            state.jobs.push(action.payload)
+        })
+        builder.addCase(postJob.rejected, (state, action) => {
             state.status = 'failure'
         })
     }

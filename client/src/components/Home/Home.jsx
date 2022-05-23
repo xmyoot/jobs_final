@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
 import { Container, Typography } from '@mui/material'
-import { getJobs } from '../../redux/jobsSlice.js'
 import Jobs from '../Jobs/Jobs.jsx'
 
-const Home = () => {
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getJobs())
-  }, [dispatch])
 
-  const { jobs } = useSelector((state) => state.jobs)
-  console.log(jobs)
+const Home = () => {
   return (
       <Container maxWidth='xl'>
         <Typography 
           sx={{
+              pt: 4,
               fontFamily: 'monospace', 
               letterSpacing:'.3rem', 
               color:'inherit', 

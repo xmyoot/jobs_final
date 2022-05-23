@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import connectDB from './database/connect.js'
 import dotenv from 'dotenv'
-
 import jobsRoute from './routes/jobs.js'
 
 /**
