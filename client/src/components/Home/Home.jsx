@@ -17,7 +17,7 @@ const Home = () => {
               }} 
           variant='h3' 
           align='center'>
-              Remote Entry Level Software Jobs
+              Remote Junior Developer Jobs
         </Typography>
         <Jobs />
       </Container>

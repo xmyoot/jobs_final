@@ -1,36 +1,26 @@
-import { getJobsList } from 'indeed-job-scraper'
-import dotenv from 'dotenv'
+import indeed from '../../utils/indeed-scraper-master/index.js'
 import connectDB from '../../database/connect.js'
 import Jobs from '../../models/jobSchema.js'
 
-//Gives use access to .env file
-dotenv.config()
-
-
-const CONNECTION_STRING = process.env.MONGO_URI
-
-const getIndeedJobs = async () => {
+const fetchIndeed = async () => {
     try {
         //connect to our database
-        await connectDB(CONNECTION_STRING)
-
-        //fetch data from indeed for various entry_level roles
-        const programmerJobs = await getJobsList({ queryTitle: 'programmer', level:'entry_level', fromdays: 30, location: 'remote' })
-        const softwareJobs = await getJobsList({ queryTitle: 'software', level:'entry_level', fromdays: 30, location: 'remote' })
-        const developerJobs = await getJobsList({ queryTitle: 'developer', level:'entry_level', fromdays: 30, location: 'remote' })
+        await connectDB()
+        // const softwareEntry = await indeed.query({ query: 'entry level software', city: 'remote', maxAge: '30', sort: 'date' })
+        const juniorEngineerJobs = await indeed.query({ query: 'junior engineer', city: 'remote', maxAge: '30', sort: 'date' })
 
         //combine results into a single array
-        const allJobs = [...programmerJobs, ...softwareJobs, ...developerJobs]
-
+        const allJobs = [...juniorEngineerJobs]
         //to create a new array with keys that match our database schema
         const jobsToDatabase = allJobs.map(job => 
             ({
-                company : job['company-name'],
-                date : job['post-date'],
-                description: job['job-snippet'],
-                position : job['job-title'],
-                location : job['company-location'],
-                jobUrl : job['job-link'],
+                company : job.company,
+                date : job.postDate,
+                description: job.summary,
+                position : job.title,
+                location : job.location,
+                salary: job.salary,
+                jobUrl : job.url
             }))
 
         //to post the various jobs to the database
@@ -42,12 +32,11 @@ const getIndeedJobs = async () => {
                 console.error(error)
             }
         }
-
-        process.exit()
+        console.log(`I got ${jobsToDatabase.length} Indeed jobs!`)
+        process.exit(0)
     } catch (error) {
         console.error(error)
     }
 }
-getIndeedJobs()
-
-export default getIndeedJobs
+fetchIndeed()
+export default fetchIndeed

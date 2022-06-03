@@ -13,7 +13,7 @@ const Navbar = () => {
                     <ManageSearchIcon fontSize='large'/>
                 </IconButton>
                 <Typography sx={{flexGrow: 1, fontFamily: 'monospace', letterSpacing:'.6rem', color:'inherit', textDecoration:'none', fontWeight: 200}} component={Link} to='/' variant='h4' align='inherit'>
-                        Remote Entry Dev
+                        Hey Junior Devs!
                 </Typography>
                 <Button startIcon={ <PostAddIcon /> } component={Link} to='/postJob' variant='outlined' color='inherit' sx={{ mr: 2}}>
                     Post Job

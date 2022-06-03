@@ -1,6 +1,7 @@
 import React from 'react'
 import AddIcon from '@mui/icons-material/Add'
-import { Tooltip, Paper, Typography, ListItem, ListItemAvatar, Avatar, ListItemText, Chip, Box } from '@mui/material'
+import { Tooltip, Paper, Typography, ListItem, ListItemAvatar, Avatar, ListItemText, Chip, Box, Button } from '@mui/material'
+import moment from 'moment'
 
 export const Job = ({ job }) => {
   const tags = job.tags.map(
@@ -46,7 +47,14 @@ export const Job = ({ job }) => {
           </ListItemText>
         </Box>
         <Box>{tags}</Box>
-        <Box>{job.date}</Box>
+        <Box><Typography variant='body1' color='GrayText.primary'>
+          {moment(job.date).fromNow()}
+        </Typography>
+        <br/>
+          <Button sx={{ mt: 2 }} variant='contained' target='_blank' href={job.jobUrl}>
+            Apply
+          </Button>
+        </Box>
       </ListItem>
     </Paper>
   )
